@@ -1,0 +1,136 @@
+<?php
+Core::CustomerIdentify();
+?>
+<script>
+$(document).ready(function(){
+	
+	$('.quantity,#phone').numeric();
+	
+	$('.quantity').keyup(function(){
+		
+		val = parseInt($.trim($(this).val()));
+		
+		if( val < 1 ){
+			
+			$(this).val(1);
+		}
+		
+	});
+	
+	cart.edit('.quantity');
+		
+});
+</script>
+<div class="navigator">
+	<a href="<?php echo Core::$Link->url('index')?>" >
+    	หน้าหลัก
+    </a>
+    <i class="fa fa-angle-double-right" style="font-size:13px; margin:0 10px;"></i>
+    <span>
+    	ตระกร้าสินค้า
+    </span>
+</div>
+
+<?php
+if( is_array($return) && count($return) > 0 ){
+?>
+<p style="margin-bottom: 20px; text-align:right" >
+<a href="javascript:void(0)" onclick="checksubmit.form('#confirm')" class="btnRed radius" >สั่งซื้อสินค้า</a>
+</p>
+
+<div style="width:60%; float:left">
+
+<table class="cartList" style="width:100%">
+<tr>
+<th style="text-align:center; width:5%">ลำดับ</th>
+<th style="width:55%">ชื่อสินค้า</th>
+<th style="width:10%">จำนวน</th>
+<th style="width:10%">ราคา</th>
+<th style="width:10%">รวม</th>
+<th style="width:10%">ลบ</th>
+</tr>
+<?php
+	
+	$order = 1;
+	
+	$total = 0;
+	
+	foreach( $return as $ID => $dataArray ){
+		
+		$total += $dataArray['subtotal'];
+?>
+	<tr>
+    	<td ><?php echo $order++ ?></td>
+        
+        <td style="text-align:left; "><?php echo $dataArray['title'] ?></td>
+        
+        <td >
+		<input type="text" url="<?php echo Core::$Link->url('edit-quantity/'.$ID)?>" maxlength="4" class="radius quantity"  value="<?php echo $dataArray['quantity'] ?>" />
+		
+        </td>
+        
+        <td data="price"><?php echo number_format($dataArray['price']) ?></td>
+        
+        <td data="subtotal"><?php echo number_format($dataArray['subtotal']) ?></td>
+        
+        <td>
+        
+            <a href="javascript:void(0)" data-url="<?php echo Core::$Link->url('delete-cart/'.$ID)?>" style="color:#888;" onclick="ask.toDelete(this)" >
+            <i class="fa fa-trash"></i>
+            </a>
+        </td>
+    
+	</tr>
+<?php
+	}
+?>	
+<tr>	
+   <td colspan="4" style="text-align:right; background:#ddd; padding:0 40px; color:#444; font-weight:bold">รวมราคาทั้งสิ้น</td>
+   <td colspan="2" data="total" style="text-align:left; background:#ddd; padding:5px 30px;color:#444;font-weight:bold">
+   	<?php echo number_format($total)?>
+   </td>
+</tr>    
+</table>
+</div>
+
+<div style="width:35%; float:right" class="customerDetail">
+<h2>ข้อมูลลูกค้า</h2>
+<form name="confirm" id="confirm" method="post" action="<?php echo Core::$Link->url('confirm')?>" >
+	<p style="margin-bottom:10px;">
+    	ชื่อ - นามสกุล
+    </p>
+    <p>
+    	<input type="text" name="fullname" maxlength="100" style="width:200px;" />
+    </p>
+    
+    <p style="margin-bottom:10px;">
+    	เบอร์โทร
+    </p>
+    <p>
+    	<input type="text" name="phone" id="phone" maxlength="100"  style="width:200px;"  />
+    </p>
+    
+    <p style="margin-bottom:10px;">
+    	อีเมล
+    </p>
+    <p>
+    	<input type="text" name="email" maxlength="100"  style="width:200px;"  />
+    </p>
+    
+    <p style="margin-bottom:10px;">
+    	ที่อยู่
+    </p>
+    <p>
+    	<textarea name="address" style="width:350px; height:50px; border:1px solid #ccc;" ></textarea>
+    </p>
+</form>
+</div>
+
+<p class="clear"> </p>
+
+<?php }else{ ?>
+
+<p style="text-align:center">
+-----ไม่มีรายการสินค้า------
+</p>
+<?php } ?>

@@ -1,0 +1,234 @@
+<?php session_start();?>
+<?php
+      require_once('connect.php');
+      $tag = isset($_GET['tag']) ? $_GET['tag'] : 'all';
+      $sql = "SELECT * FROM `article` WHERE `tag` LIKE '%".$tag."%'";
+      $result = $conn->query($sql);
+?>
+<!DOCTYPE html>
+<html lang="en">
+<title>Shop</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="Shortcut Icon" href="image/cover.png">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dist/jquery.Thailand.min.css">
+</head>
+<body>
+    <!-- Start Bar -->
+    <!-- Start Lift Bar -->
+  <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="index.php">
+    <div class="container">
+  <img src="image/Lukkycom.png">
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link btn-dark" href="index.php">Home <span class="sr-only"></span></a>
+      </li>
+      <?php if (isset($_SESSION['id'])) { ?>
+      <li class="nav-item active">
+      <a class="nav-link btn-dark" href="shop.php">Shop <span class="sr-only"></span></a>
+      </li>
+        <li class="nav-item active">
+      <a class="nav-link btn-dark " href="cart.php">Cart <span class="sr-only"></span></a>
+      </li>
+      <?php
+      }
+      ?>
+    </ul>
+    <!-- End Lift Bar -->
+    <!--Start Right Bar -->
+    <ul class="navbar-nav ml-auto">
+      <?php if (isset($_SESSION['id'])) { ?>
+      <li class="nav-item active">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        User: <?php echo $_SESSION['username']?>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="logout.php">Logout</a>
+        </div>
+      </li>
+      <?php }else {?>
+      <li class="nav-item">
+        <a class="btn btn-success" href="login.php">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="btn btn-info" href="register.php">Register</a>
+      </li>
+      <?php }?>
+    </ul>
+</div>
+  </div>
+</nav>
+
+<!-- Section Page-title -->
+    <header class="jarallax"  data-jarallax='{ "speed": 0.6 }'style="background-image: url(https://scontent.fbkk5-5.fna.fbcdn.net/v/t31.0-8/26962457_1848626591876682_3326168801229624653_o.jpg?_nc_cat=0&oh=d25392ae384ea71d38709a56693b8a40&oe=5B5BE48D);">
+        <div class="blog-image">
+            <h1 class="display-4 font-weight-bold">ข้อมูลการติดต่อ</h1>
+            <p class="lead">AppzStory Studio สอนเขียนเว็บไซต์</p>
+        </div>
+    </header>
+
+<!-- Section Blog -->
+    <section class="container py-5">
+        <div class="row text-center">
+            <div class="col-12">
+                <h2 class="border-short-bottom">รายละเอียด</h2>
+            </div>
+            <div class="col-sm-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <i class="fa fa-address-card py-2 fa-4x text-info" aria-hidden="true"></i>
+                        <h4 class="card-title">ที่อยู่</h4>
+                        <p class="card-text">กรุงเทพมหานคร ภาษีเจริญ บางหว้า</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <i class="fa fa-phone-square py-2 fa-4x text-info" aria-hidden="true"></i>
+                        <h4 class="card-title">เบอร์โทรศัพท์</h4>
+                        <p  class="card-text">(+66)86-855-1249</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <i class="fa fa-envelope  py-2 fa-4x text-info" aria-hidden="true"></i>
+                        <h4 class="card-title">อีเมลล์</h4>
+                        <p  class="card-text">example@email.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"> แบบฟอร์มติดต่อเรา </h5>
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="name">ชื่อ</label>
+                                    <input type="text" id="name" class="form-control" placeholder="ชื่อของคุณ">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="phone">เบอร์โทรศัพท์</label>
+                                    <input type="text" id="phone" class="form-control" placeholder="เบอร์โทรศัพท์ของคุณ">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="email">อีเมลล์</label>
+                                    <input type="text" id="email" class="form-control" placeholder="example@email.com">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">ข้อความของคุณ</label>
+                                <textarea id="message" rows="5" class="form-control" placeholder="เขียนข้อความของคุณที่นี้"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary d-block mx-auto">ส่งข้อความ</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+<!-- Section About -->
+    <section class="position-relative py-5 jarallax" data-jarallax='{ "speed": 0.6 }' style="background-image: url(https://images.unsplash.com/photo-1519397154350-533cea5b8bff?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=009599aa0979619a04f21ec0d5486955&auto=format&fit=crop&w=1350&q=80);">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center ">
+                    <img src="assets/image/logo.png" class="img-fluid" width="150" alt="">
+                    <h2 class="text-white display-4 font-weight-bold">AppzStory Studio สอนเขียนเว็บไซต์</h2>
+                    <div class="star-rating">
+                        <span>☆</span>
+                        <span>☆</span>
+                        <span>☆</span>
+                        <span>☆</span>
+                        <span>☆</span>
+                        <div class="star-current" style="width: 100%;">
+                            <span>★</span>
+                            <span>★</span>
+                            <span>★</span>
+                            <span>★</span>
+                            <span>★</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- Section Footer -->
+    <footer class="semi-footer p-5 text-center text-md-left">
+        <div class="row">
+            <div class="col-md-4">
+                <a class="navbar-brand" href="#">
+                    <img src="assets/image/logo.png" width="35" height="35" class="d-inline-block align-top" alt="">
+                    AppzStory Studio
+                </a>
+                <p>
+                    <i class="fa fa-phone-square"></i> 09-999-9999 <br>
+                    <i class="fa fa-envelope"></i> email@example.com <br>
+                    <i class="fa fa-address-card"></i> Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, aspernatur!
+                </p>
+                <a href="https://www.facebook.com/WebAppzStory" target="_blank">
+                    <i class="fa fa-facebook-square fa-2x"></i>
+                </a>
+                <a href="https://www.youtube.com/appzstorystudio" target="_blank">
+                    <i class="fa fa-youtube-square fa-2x"></i>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <h4>เมนู</h4>
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-5">
+                <h4>แผนที่</h4>
+                <div id="map"></div>
+            </div>
+        </div>
+    </footer>
+    <footer class="footer">
+        <span> COPYRIGHT © 2018 
+            <a href="https://www.facebook.com/WebAppzStory" target="_blank">AppzStory Studio</a>
+            ALL Right Reserved
+        </span>
+    </footer>
+        
+
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="node_modules/jarallax/dist/jarallax.min.js"></script>
+    <script src="node_modules/owl.carousel/dist/owl.carousel.min.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAOgU18_tVZdK-nJ0iDuutPnbUsTYwE_XA&callback=initMap"></script>
+    <script src="assets/js/main.js"></script>
+
+</body>
+</html>
